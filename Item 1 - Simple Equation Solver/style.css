@@ -1,0 +1,58 @@
+:root
+{
+    font-family: Helvetica;
+}
+
+.master
+{
+    width: 1024px;
+    margin: 0 auto;
+    padding: 1em;
+    background: rgb(245, 245, 245);
+}
+
+.layout, .row
+{
+    display: flex;
+}
+
+.layout
+{
+    flex-flow: column;
+}
+
+.row
+{
+    font-weight: lighter;
+    flex-flow: row;
+}
+
+.dynamic
+{
+    flex-grow: 1;
+}
+
+.spaced
+{
+    margin-right: 1em;
+}
+
+.fill
+{
+    width: 100%;
+}
+
+.column
+{
+    flex-basis: 100%;
+}
+
+@media screen and (max-width: 1024px)
+{
+    .master
+    {
+        width: 100%;
+        padding: 0;
+        margin: none;
+    }
+}

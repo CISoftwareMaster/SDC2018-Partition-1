@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Simple Equation solver</title>
+        <!-- include our stylesheet and javascript files -->
+        <link rel="stylesheet" href="style.css" />
+        <script src="main.js"></script>
+        <!-- final configurations -->
+        <meta name="viewport" content="width=device-width" />
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class="master">
+            <div class="layout">
+                <!-- equation input -->
+                <div class="row">
+                    <div class="spaced dynamic column">
+                        <input type="text" class="fill" id="se-input" placeholder="ax + bx = 0" />
+                    </div>
+                    <div class="column">
+                        <input type="button" value="Solve equation" id="se-btn-solve" />
+                        <input type="button" value="Clear" id="se-btn-clear-output" />
+                    </div>
+                </div>
+                <!-- equation output -->
+                <div class="row">
+                    <div class="column">
+                        <h4>Output will appear here</h4>
+                        <div class="layout" id="se-output">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
