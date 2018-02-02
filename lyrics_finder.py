@@ -1,3 +1,14 @@
+"""
+ * Partition 1, Item 3:
+ * Lyrics Finder
+ *
+ * "Apps that makes work easier"
+ *
+ * For SDC 2018
+ *
+ * Contact: cisoftwaremaster@gmail.com
+ *
+ """
 import sys
 import urllib.request
 from bs4 import BeautifulSoup
