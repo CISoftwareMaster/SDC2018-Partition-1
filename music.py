@@ -26,7 +26,7 @@ class MP_Lyric_Fetch_Thread(QThread):
 
         # start the thread
         if not self.isRunning():
-            self.start(QThread.LowPriority)
+            self.start(QThread.NormalPriority)
 
     def prepare_str(self, s):
         s = s.replace(" ", "+")
@@ -136,8 +136,8 @@ class MP_Button(QPushButton):
             # update pen
             painter.setPen(QPen(Qt.NoPen))
 
-            painter.setBrush(QBrush(QColor(255, 255, 255, 30)))
-            painter.drawEllipse(self.cursor_x-64, self.cursor_y-64, 128, 128)
+            painter.setBrush(QBrush(QColor(255, 255, 255, 80)))
+            painter.drawEllipse(self.cursor_x-32, self.cursor_y-32, 64, 64)
 
 
 class MP_SeekSlider(QSlider):
@@ -425,10 +425,25 @@ class MP_Window(QMainWindow):
         layout.addWidget(song_title, 1)
         layout.addWidget(control_bar)
 
+        # dial animation timer
+        da_timer = QTimer()
+        da_timer.setSingleShot(False)
+        da_timer.setInterval(50)
+        self.da_progress = 0
+
         # temporary filename
         tfilename = ""
 
         # slots
+        def _dial_animation_update():
+            control_lyric_delay.setValue(control_lyric_delay.value() +
+                                         (-control_lyric_delay.value() * self.da_progress))
+
+            if self.da_progress < 1:
+                self.da_progress += 0.1
+            else:
+                da_timer.stop()
+
         def _playpause_toggle():
             if self.player.state() == QMediaPlayer.PlayingState:
                 self.player.pause()
@@ -523,6 +538,10 @@ class MP_Window(QMainWindow):
             # update seek bar
             control_seek_slider.setValue(0)
 
+            # animate the lyric delay dial
+            self.da_progress = 0
+            da_timer.start()
+
             # hide the lyrics view, again
             lyric_view.hide()
             self.setMinimumSize(380, 200)
@@ -543,6 +562,8 @@ class MP_Window(QMainWindow):
         qApp.aboutToQuit.connect(_about_to_close)
         self.thread.finished_fetching.connect(_fetch_finished)
         self.thread.task_changed.connect(_fetch_update)
+
+        da_timer.timeout.connect(_dial_animation_update)
 
         self.player.durationChanged.connect(_media_length_changed)
         self.player.positionChanged.connect(_media_position_changed)
